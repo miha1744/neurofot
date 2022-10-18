@@ -10,8 +10,7 @@ IP = env.str("ip")  # Тоже str, но для айпи адреса хоста
 URL = env.str("URL")
 db_host = IP
 PGUSER = str(env.str("PGUSER"))
-PGPASSWORD = ''
-    # str(env.str("PGPASSWORD"))
+PGPASSWORD = str(env.str("PGPASSWORD"))
 DATABASE = str(env.str("DATABASE"))
 POSTGRES_URI = f"postgresql://{PGUSER}:{PGPASSWORD}@{db_host}/{DATABASE}"
 NEUROFOOTBALL_CHAT_ID = int(env.str("NEUROFOOTBALL_CHAT_ID"))
