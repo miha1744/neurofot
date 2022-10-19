@@ -6,6 +6,7 @@ from utils.db_api.schemas import neuro_bet
 from utils.db_api.schemas.neuro_bet import NeuroBet
 from utils.parser.parser import create_df_robobet
 from loader import dp
+import asyncio
 
 
 
@@ -13,7 +14,7 @@ async def create_channel_msg(neuro_football_bet: NeuroBet, result: int):
     text = f'''{neuro_football_bet.event_league}\n{neuro_football_bet.team_1_name} - {neuro_football_bet.team_2_name}\nПрогноз: {hbold(neuro_football_bet.event_forecast)}, КФ {hbold(neuro_football_bet.first_team_odd) if neuro_football_bet.event_forecast == 'П1'else hbold(neuro_football_bet.second_team_odd)}\nВероятность победы(NeuroFootball): {hbold(neuro_football_bet.first_team_percentage) if neuro_football_bet.event_forecast == 'П1'else neuro_football_bet.second_team_percentage}\n\n'''
     final_text = ''
     if result == 0:
-        final_text = hbold('СОБЫТИЕОТМЕНЕНО') + '\n' + text
+        final_text = hbold('СОБЫТИЕ ОТМЕНЕНО') + '\n' + text
     if result == 1:
         final_text = f"✅✅✅{hbold('СТАВКА ЗАШЛА')}✅✅✅" + '\n' + text
     if result == 2:
@@ -23,19 +24,20 @@ async def create_channel_msg(neuro_football_bet: NeuroBet, result: int):
 
 
 async def sort_criteria(value):
+    print(value)
     if value[-1] == '- : -':
         if value[7] == 'П1':
-            if value[8] > 1.7:
-                neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
-                if neuro_football_bet:
-                    return
-                await neuro_football_commands.add_neurofootball_bet(*value)
+            # if value[8] > 1.7:
+            neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
+            if neuro_football_bet:
+                return
+            await neuro_football_commands.add_neurofootball_bet(*value)
         if value[7] == 'П2':
-            if value[10] > 1.7:
-                neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
-                if neuro_football_bet:
-                    return
-                await neuro_football_commands.add_neurofootball_bet(*value)
+            # if value[10] > 1.7:
+            neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
+            if neuro_football_bet:
+                return
+            await neuro_football_commands.add_neurofootball_bet(*value)
     elif value[-1] == 'отм':
         neuro_football_bet = await neuro_football_commands.check_neurobet(value[0],value[2], value[3])
         if neuro_football_bet:
@@ -62,3 +64,4 @@ async def pars_schedule():
     values = create_df_robobet()
     for value in values:
         await sort_criteria(value)
+        await asyncio.sleep(1)
