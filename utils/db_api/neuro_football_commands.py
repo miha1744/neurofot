@@ -55,8 +55,8 @@ async def id_neurofootball_bet():
         return 0
 
 
-async def check_neurobet(time, team_1_name, team_2_name) -> NeuroBet:
-    neuro_bet = await NeuroBet.query.where(and_(NeuroBet.event_start_time == time,NeuroBet.team_2_name == team_2_name,
+async def check_neurobet(team_1_name, team_2_name) -> NeuroBet:
+    neuro_bet = await NeuroBet.query.where(and_(NeuroBet.team_2_name == team_2_name,
                               NeuroBet.team_1_name == team_1_name)).gino.first()
     return neuro_bet
 

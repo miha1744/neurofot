@@ -28,24 +28,24 @@ async def sort_criteria(value):
     if value[-1] == '- : -':
         if value[7] == 'П1':
             # if value[8] > 1.7:
-            neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
+            neuro_football_bet = await neuro_football_commands.check_neurobet(value[2], value[3])
             if neuro_football_bet:
                 return
             await neuro_football_commands.add_neurofootball_bet(*value)
         if value[7] == 'П2':
             # if value[10] > 1.7:
-            neuro_football_bet = await neuro_football_commands.check_neurobet(value[0], value[2], value[3])
+            neuro_football_bet = await neuro_football_commands.check_neurobet(value[2], value[3])
             if neuro_football_bet:
                 return
             await neuro_football_commands.add_neurofootball_bet(*value)
     elif value[-1] == 'отм':
-        neuro_football_bet = await neuro_football_commands.check_neurobet(value[0],value[2], value[3])
+        neuro_football_bet = await neuro_football_commands.check_neurobet(value[2], value[3])
         if neuro_football_bet:
             await result_neuro_table_commands.add_result_neurofootball_bet(neuro_football_bet,value[-1], 0)
             await neuro_football_commands.delete_neurobet(neuro_football_bet.id)
             await create_channel_msg(neuro_football_bet, 0)
     else:
-        neuro_football_bet = await neuro_football_commands.check_neurobet(value[0],value[2],value[3])
+        neuro_football_bet = await neuro_football_commands.check_neurobet(value[2],value[3])
         if neuro_football_bet:
             actual_result = value[-1].split(':')
             if int(actual_result[0]) > int(actual_result[1]) and neuro_football_bet.event_forecast == 'П1':
@@ -61,7 +61,8 @@ async def sort_criteria(value):
 
 
 async def pars_schedule():
-    values = create_df_robobet()
-    for value in values:
-        await sort_criteria(value)
-        await asyncio.sleep(1)
+    while True:
+        values = create_df_robobet()
+        for value in values:
+            await  sort_criteria(value)
+        await asyncio.sleep(10)
