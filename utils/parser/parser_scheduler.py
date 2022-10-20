@@ -61,8 +61,6 @@ async def sort_criteria(value):
 
 
 async def pars_schedule():
-    while True:
         values = create_df_robobet()
         for value in values:
             await  sort_criteria(value)
-        await asyncio.sleep(10)

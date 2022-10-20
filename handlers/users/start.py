@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.builtin import CommandStart
+from aiogram.dispatcher.filters.builtin import CommandStart, Command
 from aiogram.utils.markdown import hlink, hunderline, hbold
 
 from keyboards.inline.main import menu_one_button_keyboard
