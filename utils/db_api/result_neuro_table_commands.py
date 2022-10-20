@@ -11,13 +11,16 @@ from sqlalchemy import and_
 
 
 # Команды связанные с юзером
-async def add_result_neurofootball_bet(neurobet: NeuroBet ,result, bet_played: int):
+async def add_result_neurofootball_bet(event_start_time, event_league, team_1_name,
+                             team_2_name, first_team_percentage, draw_percentage,
+                             second_team_percentage, event_forecast,first_team_odd,
+                             draw_odd, second_team_odd,event_result, bet_played: int):
     # Добавить нейроставку
     try:
-        result_neuro_bet = ResultNeuroBet(id=await id_result_neurofootball_bet(), event_start_time=neurobet.event_start_time, event_league=neurobet.event_league, team_1_name=neurobet.team_1_name,
-                             team_2_name=neurobet.team_2_name, first_team_percentage=neurobet.first_team_percentage, draw_percentage=neurobet.draw_percentage,
-                             second_team_percentage=neurobet.second_team_percentage, event_forecast=neurobet.event_forecast,first_team_odd=neurobet.first_team_odd,
-                             draw_odd=neurobet.draw_odd, second_team_odd=neurobet.second_team_odd,event_result=result, bet_played= bet_played)
+        result_neuro_bet = ResultNeuroBet(id=await id_result_neurofootball_bet(), event_start_time=event_start_time, event_league=event_league, team_1_name=team_1_name,
+                             team_2_name=team_2_name, first_team_percentage=first_team_percentage, draw_percentage=draw_percentage,
+                             second_team_percentage=second_team_percentage, event_forecast=event_forecast,first_team_odd=first_team_odd,
+                             draw_odd=draw_odd, second_team_odd=second_team_odd,event_result=event_result, bet_played= bet_played)
         await result_neuro_bet.create()
 
     except UniqueViolationError:
